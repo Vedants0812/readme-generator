@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI README Generator</title>
+  <link rel="stylesheet" href="style.css" />
+  
+</head>
+<body>
+
+<div class="container">
+  <h1>🚀 AI README Generator</h1>
+  <p class="subtitle">Generate professional GitHub README files instantly</p>
+
+  <div class="form">
+    <input id="name" placeholder="Project Name" />
+    <textarea id="desc" placeholder="Project Description"></textarea>
+    <input id="tech" placeholder="Tech Stack (e.g. React, Node.js)" />
+
+    <button onclick="generate()">Generate README</button>
+    <button onclick="downloadReadme()">Download .md</button>
+  </div>
+
+  <div class="output-box">
+    <div class="output-header">
+      <span>Generated README</span>
+      <button onclick="copyText()">Copy</button>
+    </div>
+    <pre id="output">Your README will appear here...</pre>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
