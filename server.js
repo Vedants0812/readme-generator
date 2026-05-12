@@ -74,7 +74,3 @@ app.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);
 });
 
-catch (err) {
-  console.error("FULL ERROR:", err); // 👈 ADD THIS
-  res.status(500).json({ error: err.message });
-}
