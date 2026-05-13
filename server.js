@@ -16,7 +16,7 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// ✅ Root route (for testing)
+// ✅ Root route
 app.get("/", (req, res) => {
   res.send("🚀 README Generator API is running");
 });
@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
 app.post("/generate", async (req, res) => {
   const { name, description, tech } = req.body;
 
-  // Basic validation
+  // Validation
   if (!name || !description || !tech) {
     return res.status(400).json({
       error: "All fields (name, description, tech) are required",
@@ -59,25 +59,17 @@ Include:
     });
 
   } catch (err) {
-    console.error("❌ OpenAI Error:", err.message);
+    console.error("❌ FULL ERROR:", err); // 👈 IMPORTANT
 
     res.status(500).json({
-      error: "Failed to generate README",
+      error: err.message,
     });
   }
 });
 
-// ✅ IMPORTANT: Dynamic port for Render
+// ✅ Dynamic port (Render)
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);
 });
-catch (err) {
-  console.error("❌ FULL ERROR:", err); // 👈 VERY IMPORTANT
-
-  res.status(500).json({
-    error: err.message,
-    details: err
-  });
-}
