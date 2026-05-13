@@ -1,9 +1,5 @@
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
-import OpenAI from "openai";
-
-dotenv.config();
 
 const app = express();
 
@@ -11,18 +7,13 @@ const app = express();
 app.use(cors({ origin: "*" }));
 app.use(express.json());
 
-// OpenAI client
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 // ✅ Root route
 app.get("/", (req, res) => {
   res.send("🚀 README Generator API is running");
 });
 
-// ✅ Main API route
-app.post("/generate", async (req, res) => {
+// ✅ Generate README (NO API - FREE)
+app.post("/generate", (req, res) => {
   const { name, description, tech } = req.body;
 
   // Validation
@@ -32,42 +23,44 @@ app.post("/generate", async (req, res) => {
     });
   }
 
-  try {
-    const response = await client.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [
-        {
-          role: "user",
-          content: `Generate a professional GitHub README for:
+  // Generate README
+  const readme = `
+# ${name}
 
-Project Name: ${name}
-Description: ${description}
-Tech Stack: ${tech}
+## 📌 Overview
+${description}
 
-Include:
-- Overview
-- Features
-- Installation
-- Usage
-- Tech Stack section`
-        }
-      ],
-    });
+## 🚀 Features
+- Easy to use
+- Clean and simple UI
+- Fast README generation
 
-    res.json({
-      result: response.choices[0].message.content,
-    });
+## 🛠 Tech Stack
+${tech}
 
-  } catch (err) {
-    console.error("❌ FULL ERROR:", err); // 👈 IMPORTANT
+## ⚙️ Installation
+\`\`\`bash
+git clone https://github.com/your-username/${name}
+cd ${name}
+npm install
+\`\`\`
 
-    res.status(500).json({
-      error: err.message,
-    });
-  }
+## ▶️ Usage
+\`\`\`bash
+npm start
+\`\`\`
+
+## 🤝 Contributing
+Contributions are welcome! Feel free to fork this repo and submit a PR.
+
+## 📄 License
+MIT License
+`;
+
+  res.json({ result: readme });
 });
 
-// ✅ Dynamic port (Render)
+// ✅ Dynamic port for Render
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
