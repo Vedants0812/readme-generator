@@ -14,7 +14,7 @@ async function generate() {
   output.innerText = "⚡ Generating README... Please wait...";
 
   try {
-    const res = await fetch("https://readme-generator-9apg.onrender.com", {
+    const res = await fetch("https://readme-generator-9apg.onrender.com/generate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
